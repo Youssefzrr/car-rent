@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contact, Visitor
+from .models import Contact, Visitor,Car
 from django.urls import path
 from django.shortcuts import render
 
@@ -31,6 +31,25 @@ class CustomAdminSite(admin.AdminSite):
             # Add more context data as needed
         }
         return render(request, 'admin/dashboard.html', context)
+
+@admin.register(Car)
+class CarAdmin(admin.ModelAdmin):
+    list_display = ('name', 'brand', 'price', 'transmission', 'fuel')
+    list_filter = ('brand', 'transmission', 'fuel')
+    search_fields = ('name', 'brand')
+    readonly_fields = ('id',)
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'brand', 'price', 'image')
+        }),
+        ('Specifications', {
+            'fields': ('mileage', 'transmission', 'seats', 'luggage', 'fuel')
+        }),
+    )
+
+# If you prefer a simpler registration without customization, you can use:
+# admin.site.register(Car)
+
 
 custom_admin_site = CustomAdminSite(name='customadmin')
 custom_admin_site.register(Contact, ContactAdmin)

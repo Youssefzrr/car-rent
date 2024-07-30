@@ -32,7 +32,6 @@
                     <li class="nav-item"><a href="{% url 'services' %}" class="nav-link">Services</a></li>
                     <li class="nav-item"><a href="{% url 'pricing' %}" class="nav-link">Pricing</a></li>
                     <li class="nav-item active"><a href="{% url 'car' %}" class="nav-link">Cars</a></li>
-                    <li class="nav-item"><a href="{% url 'blog' %}" class="nav-link">Blog</a></li>
                     <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
                 </ul>
             </div>
@@ -58,14 +57,14 @@
                 {% for car in cars %}
                 <div class="col-md-4">
                     <div class="car-wrap rounded ftco-animate">
-                        <div class="img rounded d-flex align-items-end" style="background-image: url('{% static car.image %}');"></div>
+                        <div class="img rounded d-flex align-items-end" style="background-image: url('{{ car.image.url }}');"></div>
                         <div class="text">
                             <h2 class="mb-0"><a href="{% url 'car-single' car.id %}">{{ car.name }}</a></h2>
                             <div class="d-flex mb-3">
                                 <span class="cat">{{ car.brand }}</span>
                                 <p class="price ml-auto">${{ car.price }} <span>/day</span></p>
                             </div>
-                            <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a href="{% url 'car-single' car.id %}" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                            <p class="d-flex mb-0 d-block"><a href="https://wa.me/212620827855" class="btn btn-primary py-2 mr-1">Book now</a> <a href="{% url 'car-single' car.id %}" class="btn btn-secondary py-2 ml-1">Details</a></p>
                         </div>
                     </div>
                 </div>

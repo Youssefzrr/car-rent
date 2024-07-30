@@ -8,17 +8,6 @@ from django.contrib import messages
 def about_view(request):
     return render(request, 'about.html')
 
-def blog_view(request):
-    posts = BlogPost.objects.all().order_by('-date_posted')
-    paginator = Paginator(posts, 6)  # Show 6 posts per page
-    page = request.GET.get('page')
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-    return render(request, 'blog.html', {'posts': posts})
 
 def blog_single_view(request, post_id):
     post = get_object_or_404(BlogPost, id=post_id)
@@ -27,7 +16,9 @@ def blog_single_view(request, post_id):
 
 
 def car_view(request):
-    cars = Car.objects.all()
+    cars = Car.objects.all().order_by('id')  # or any other field you want to order by
+    for car in cars:
+        print(f"Car: {car.name}, Image URL: {car.image.url}")
     form = CarSearchForm(request.GET)
     if form.is_valid():
         make = form.cleaned_data.get('make')
@@ -55,9 +46,9 @@ def car_view(request):
 
 def car_single_view(request, car_id):
     car = get_object_or_404(Car, id=car_id)
-    related_cars = Car.objects.exclude(id=car_id)[:3]  # Get 3 related cars
+    print(f"Car: {car.name}, Image URL: {car.image.url}")
+    related_cars = Car.objects.exclude(id=car_id)[:3]
     return render(request, 'car-single.html', {'car': car, 'related_cars': related_cars})
-
 def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)

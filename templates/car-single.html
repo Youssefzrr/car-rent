@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Car Details{% endblock %}
 
 {% block extra_css %}
@@ -32,7 +32,6 @@
                     <li class="nav-item"><a href="{% url 'services' %}" class="nav-link">Services</a></li>
                     <li class="nav-item"><a href="{% url 'pricing' %}" class="nav-link">Pricing</a></li>
                     <li class="nav-item"><a href="{% url 'car' %}" class="nav-link">Cars</a></li>
-                    <li class="nav-item"><a href="{% url 'blog' %}" class="nav-link">Blog</a></li>
                     <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
                 </ul>
             </div>
@@ -57,7 +56,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-12">
                     <div class="car-details">
-                        <div class="img rounded" style="background-image: url('{% static car.image %}');"></div>
+                        <div class="img rounded" style="background-image: url('{{ car.image.url }}');"></div>
                         <div class="text text-center">
                             <span class="subheading">{{ car.brand }}</span>
                             <h2>{{ car.name }}</h2>
@@ -336,10 +335,18 @@
     <section class="ftco-section ftco-no-pt">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-12 heading-section text-center ftco-animate mb-5">
-                    <span class="subheading">Choose Car</span>
-                    <h2 class="mb-2">Related Cars</h2>
-                </div>
+                <style>
+                    .custom-btn {
+                    font-size: 1.25rem;
+                    padding: 15px 40px;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    }
+            </style>
+            <div class="text-center">
+            <a href="https://wa.me/212620827855" class="btn btn-primary custom-btn">Book now</a>
+            </div>
+                    
             </div>
             <div class="row">
                 {% for related_car in related_cars %}
